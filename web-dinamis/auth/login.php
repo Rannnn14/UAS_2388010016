@@ -80,7 +80,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
 
                 <div class="form-group">
-                    <label for="password" class="form-label">Password</label>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <label for="password" class="form-label" style="margin-bottom: 0;">Password</label>
+                        <a href="forgot-password.php" style="font-size: 0.85rem; text-decoration: none; color: var(--accent-primary); transition: var(--transition-fast);" onmouseover="this.style.color='var(--accent-secondary)'" onmouseout="this.style.color='var(--accent-primary)'">Lupa Password?</a>
+                    </div>
                     <input type="password" id="password" name="password" class="form-input" placeholder="Masukkan password" required>
                 </div>
 

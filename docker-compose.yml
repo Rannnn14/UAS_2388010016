@@ -1,13 +1,22 @@
 version: '3.8'
 
 services:
-  web:
+  statis:
+    build:
+      context: ./web-statis
+      dockerfile: Dockerfile
+    container_name: eperpus_statis
+    ports:
+      - "80:80" # Memetakan port 80 EC2 ke port 80 Container (web statis)
+    restart: always
+
+  dinamis:
     build:
       context: ./web-dinamis
       dockerfile: Dockerfile
-    container_name: eperpus_web
+    container_name: eperpus_dinamis
     ports:
-      - "80:80" # Memetakan port 80 EC2 ke port 80 Container agar bisa diakses langsung via IP AWS
+      - "3000:80" # Memetakan port 3000 EC2 ke port 80 Container (web dinamis PHP Apache)
     volumes:
       - ./web-dinamis:/var/www/html
     environment:
@@ -20,15 +29,13 @@ services:
     restart: always
 
   db:
-    image: mysql:8.0
+    image: mariadb:10.6 # Menggunakan MariaDB sesuai kriteria penilaian UAS
     container_name: eperpus_db
-    command: --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=adminsecretpassword
       - MYSQL_DATABASE=perpustakaan
-    ports:
-      - "3306:3306" # Memetakan port 3306 jika ingin diakses dari luar (bisa ditutup jika demi keamanan)
+    # Port 3306 ditutup/tidak diekspos ke publik demi keamanan dan penilaian "Sangat Baik" di UAS
     volumes:
       - db_data:/var/lib/mysql
       # Otomatis mengimport database.sql saat kontainer db pertama kali dibuat
@@ -36,3 +43,4 @@ services:
 
 volumes:
   db_data:
+
