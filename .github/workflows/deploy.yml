@@ -88,9 +88,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           source: "docker-compose.yml,web-dinamis/database.sql"
-          # Menggunakan target 'app' langsung (relatif terhadap home direktori user remote)
-          target: "app"
-          strip_components: 0
+          target: "~/app/"
 
       - name: Execute Remote SSH Commands
         uses: appleboy/ssh-action@v0.1.10
@@ -106,4 +104,4 @@ jobs:
             # Tarik image terbaru
             docker compose pull
             # Jalankan kontainer dengan downtime minimal (Zero-Touch)
-            docker compose up -d --remove-orphans
+            docker compose up -d --remove-orphans 

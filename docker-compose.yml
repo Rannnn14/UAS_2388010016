@@ -20,7 +20,7 @@ services:
       - DB_HOST=db
       - DB_NAME=perpustakaan
       - DB_USER=root
-      - DB_PASSWORD=adminsecretpassword # Gunakan password yang kuat untuk AWS
+      - DB_PASSWORD=Rahasia123! # Gunakan password yang kuat untuk AWS
     depends_on:
       - db
     restart: always
