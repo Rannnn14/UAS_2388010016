@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: ./web-dinamis
+      dockerfile: Dockerfile
+    container_name: eperpus_web
+    ports:
+      - "80:80" # Memetakan port 80 EC2 ke port 80 Container agar bisa diakses langsung via IP AWS
+    volumes:
+      - ./web-dinamis:/var/www/html
+    environment:
+      - DB_HOST=db
+      - DB_NAME=perpustakaan
+      - DB_USER=root
+      - DB_PASSWORD=adminsecretpassword # Gunakan password yang kuat untuk AWS
+    depends_on:
+      - db
+    restart: always
+
+  db:
+    image: mysql:8.0
+    container_name: eperpus_db
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=adminsecretpassword
+      - MYSQL_DATABASE=perpustakaan
+    ports:
+      - "3306:3306" # Memetakan port 3306 jika ingin diakses dari luar (bisa ditutup jika demi keamanan)
+    volumes:
+      - db_data:/var/lib/mysql
+      # Otomatis mengimport database.sql saat kontainer db pertama kali dibuat
+      - ./web-dinamis/database.sql:/docker-entrypoint-initdb.d/database.sql
+
+volumes:
+  db_data:
