@@ -103,4 +103,4 @@ jobs:
             # Tarik image terbaru
             docker compose pull
             # Jalankan kontainer dengan downtime minimal (Zero-Touch)
-            docker compose up -d --remove-orphans
+            docker compose up -d --remove-orphans 
