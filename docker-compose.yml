@@ -2,23 +2,20 @@ version: '3.8'
 
 services:
   statis:
-    build:
-      context: ./web-statis
-      dockerfile: Dockerfile
+    image: qih14/uas_2388010016:latest # Menggunakan image dari Docker Hub
     container_name: eperpus_statis
     ports:
       - "80:80" # Memetakan port 80 EC2 ke port 80 Container (web statis)
     restart: always
 
   dinamis:
-    build:
-      context: ./web-dinamis
-      dockerfile: Dockerfile
+    image: qih14/uas_dinamis_2388010016:latest # Menggunakan image dari Docker Hub
     container_name: eperpus_dinamis
     ports:
       - "3000:80" # Memetakan port 3000 EC2 ke port 80 Container (web dinamis PHP Apache)
-    volumes:
-      - ./web-dinamis:/var/www/html
+    # Volumes dinonaktifkan di production agar tidak meng-override code aplikasi dengan folder kosong di host EC2
+    # volumes:
+    #   - ./web-dinamis:/var/www/html
     environment:
       - DB_HOST=db
       - DB_NAME=perpustakaan
@@ -39,6 +36,7 @@ services:
     volumes:
       - db_data:/var/lib/mysql
       # Otomatis mengimport database.sql saat kontainer db pertama kali dibuat
+      # File database.sql disalin ke EC2 melalui SCP di GitHub Actions
       - ./web-dinamis/database.sql:/docker-entrypoint-initdb.d/database.sql
 
 volumes:

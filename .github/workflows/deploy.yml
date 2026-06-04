@@ -81,13 +81,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Copy docker-compose.yml to EC2
+      - name: Copy files to EC2
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          source: "docker-compose.yml"
+          source: "docker-compose.yml,web-dinamis/database.sql"
           target: "~/app/"
 
       - name: Execute Remote SSH Commands
@@ -97,6 +97,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            mkdir -p ~/app
             cd ~/app
             # Login ke Docker Hub agar bisa menarik image terbaru
             echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
