@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <form action="" method="POST">
                 <div class="form-group">
                     <label for="username" class="form-label">Username</label>
-                    <input type="text" id="username" name="username" class="form-input" placeholder="Masukkan username" required autofocus autocomplete="off">
+                    <input type="text" id="username" name="username" class="form-input" placeholder="Username" required autofocus autocomplete="off">
                 </div>
 
                 <div class="form-group">
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <label for="password" class="form-label" style="margin-bottom: 0;">Password</label>
                         <a href="forgot-password.php" style="font-size: 0.85rem; text-decoration: none; color: var(--accent-primary); transition: var(--transition-fast);" onmouseover="this.style.color='var(--accent-secondary)'" onmouseout="this.style.color='var(--accent-primary)'">Lupa Password?</a>
                     </div>
-                    <input type="password" id="password" name="password" class="form-input" placeholder="Masukkan password" required>
+                    <input type="password" id="password" name="password" class="form-input" placeholder="password" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary btn-block">
