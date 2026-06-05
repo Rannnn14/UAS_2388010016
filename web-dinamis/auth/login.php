@@ -9,7 +9,7 @@ if (isset($_SESSION['role'])) {
     header("Location: ../admin/index.php");
     exit();
 }
-
+ 
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
